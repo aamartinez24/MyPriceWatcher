@@ -18,9 +18,13 @@ public class Item {
         this.url = url;
     }
 
+    public void setName(String itemName) { this.name = itemName; }
+
     public void setInitalPrice(double initalPrice){
         this.initalPrice = initalPrice;
     }
+
+    public void setUrl(String itemURL) { this.url = itemURL; }
 
     public String getItemName(){
         return this.name;

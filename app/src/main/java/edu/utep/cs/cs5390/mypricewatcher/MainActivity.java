@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 // Airam Martinez
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddItemDialog.AddItemDialogListener {
 
     private TextView itemName;
     private TextView itemInitalPrice;
@@ -18,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        itemName = findViewById(R.id.itemName);
+        /*itemName = findViewById(R.id.itemName);
         itemInitalPrice = findViewById(R.id.itemInitalPrice);
         // Fixed item's name and url
         String name = "Nintendo Switch";
@@ -36,6 +39,32 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("itemInitalPrice", item.getInitalPrice());
         intent.putExtra("itemName", item.getItemName());
         intent.putExtra("itemURL", item.getUrl());
-        startActivity(intent);
+        startActivity(intent);*/
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_add_item:
+                openDialog();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void openDialog() {
+        AddItemDialog addItemDialog = new AddItemDialog();
+        addItemDialog.show(getSupportFragmentManager(), "Add Item Dialog");
+    }
+
+    @Override
+    public void applyTexts(String itemName, String itemURL, double itemPrice) {
+        Log.d("Name", "" + itemName);
+        Log.d("URL", "" + itemURL);
+        Log.d("Price", "" + itemPrice);
     }
 }
