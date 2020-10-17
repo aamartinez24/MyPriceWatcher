@@ -12,11 +12,12 @@ public class PriceFinder {
         this.item = item;
     }
 
-    public void findCurrPrice(){
+    public double findCurrPrice(){
         // Generate random number.
         double currPrice = ThreadLocalRandom.current().nextDouble(10, item.getInitalPrice());
         // Make double have two decimal places.
         this.currentPrice = Math.round(currPrice * 100.0) / 100.0;
+        return this.currentPrice;
     }
 
     public double getPercentageChange(){
@@ -32,7 +33,4 @@ public class PriceFinder {
         return this.item;
     }
 
-    public double getCurrentPrice(){
-        return this.currentPrice;
-    }
 }

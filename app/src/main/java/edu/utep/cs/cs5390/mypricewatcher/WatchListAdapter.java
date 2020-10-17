@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -35,14 +36,11 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
         priceFinder = new PriceFinder(current);
 
         TextView itemCurrentPrice = convertView.findViewById(R.id.itemCurrentPrice);
-        stringDouble = Double.toString(priceFinder.getCurrentPrice());
+        stringDouble = Double.toString(priceFinder.findCurrPrice());
         itemCurrentPrice.setText(stringDouble);
 
         TextView itemPercentChange = convertView.findViewById(R.id.itemPercentChange);
-        stringDouble = Double.toString(priceFinder.getPercentageChange());
-        itemCurrentPrice.setText(stringDouble);
-
-
+        itemPercentChange.setText("%" + priceFinder.getPercentageChange());
 
         return convertView;
     }

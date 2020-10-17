@@ -30,7 +30,7 @@ public class currentPriceActivity extends AppCompatActivity {
         itemCurrentPrice = findViewById(R.id.itemCurrentPrice);
         itemPercentChange = findViewById(R.id.itemPercentChange);
         priceFinder.findCurrPrice();
-        double currentPrice = priceFinder.getCurrentPrice();
+        double currentPrice = priceFinder.findCurrPrice();
         itemCurrentPrice.setText("$" + currentPrice);
         double percentChange = priceFinder.getPercentageChange();
         itemPercentChange.setText(percentChange + "%");
