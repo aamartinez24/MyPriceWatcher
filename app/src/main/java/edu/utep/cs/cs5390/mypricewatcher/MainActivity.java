@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-// Airam Martinez
+// Airam Martinez & Mildred Brito
 public class MainActivity extends AppCompatActivity implements AddItemDialog.AddItemDialogListener {
 
     private TextView itemName;
@@ -31,25 +32,6 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         listView = findViewById(R.id.listView);
         adapter = new WatchListAdapter(this, R.layout.watch_list, Item.allItems());
         listView.setAdapter(adapter);
-        /*itemName = findViewById(R.id.itemName);
-        itemInitalPrice = findViewById(R.id.itemInitalPrice);
-        // Fixed item's name and url
-        String name = "Nintendo Switch";
-        String url = "https://www.walmart.com/ip/Nintendo-Switch-Console-with-Neon-Blue-Red-Joy-Con/709776123";
-        item = new Item(name, url);
-        itemName.setText(item.getItemName());
-        // Fixed item's inital price
-        double initalPrice = 299.99;
-        item.setInitalPrice(initalPrice);
-        itemInitalPrice.setText("$" + initalPrice);
-    }
-
-    public void buttonClicked(View view) {
-        Intent intent = new Intent(this, currentPriceActivity.class);
-        intent.putExtra("itemInitalPrice", item.getInitalPrice());
-        intent.putExtra("itemName", item.getItemName());
-        intent.putExtra("itemURL", item.getUrl());
-        startActivity(intent);*/
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,4 +69,17 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         popup.show();
     }
 
+
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.renameItem:
+            case R.id.removeItem:
+                // do your code
+                return true;
+
+            default:
+                return false;
+        }
+    }
 }

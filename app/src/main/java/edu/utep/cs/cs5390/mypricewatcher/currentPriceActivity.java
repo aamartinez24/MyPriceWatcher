@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-// Airam Martinez
+// Airam Martinez & Mildred Brito
 public class currentPriceActivity extends AppCompatActivity {
 
     private TextView itemCurrentPrice;

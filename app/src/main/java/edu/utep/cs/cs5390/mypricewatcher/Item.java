@@ -3,7 +3,7 @@ package edu.utep.cs.cs5390.mypricewatcher;
 import java.util.ArrayList;
 import java.util.List;
 
-// Airam Martinez
+// Airam Martinez & Mildred Brito
 public class Item {
 
     private static List<Item> allItems = new ArrayList<>();

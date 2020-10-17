@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+// Airam Martinez & Mildred Brito
 
 public class AddItemDialog extends AppCompatDialogFragment {
 
@@ -44,7 +48,6 @@ public class AddItemDialog extends AppCompatDialogFragment {
                             double itemPrice = Double.parseDouble(editTextItemPrice.getText().toString());
                             listener.applyTexts(itemName, itemURL, itemPrice);
                         }
-                        //addItem();
                     }
                 });
 
@@ -54,15 +57,6 @@ public class AddItemDialog extends AppCompatDialogFragment {
 
         return builder.create();
     }
-
-    /*private void addItem() {
-        String itemName = editTextItemName.getText().toString();
-        String itemURL = editTextItemURL.getText().toString();
-        double itemPriceD = Double.parseDouble(editTextItemPrice.getText().toString());
-        item = new Item(itemName, itemPriceD, itemURL);
-        adapter.add(item);
-        adapter.notifyDataSetChanged();
-    }*/
 
     @Override
     public void onAttach(Context context) {
@@ -78,4 +72,5 @@ public class AddItemDialog extends AppCompatDialogFragment {
     public interface AddItemDialogListener {
         void applyTexts(String itemName, String itemURL, double itemPrice);
     }
+
 }

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// Airam Martinez & Mildred Brito
+
 public class WatchListAdapter extends ArrayAdapter<Item> {
     PriceFinder priceFinder;
 

@@ -2,7 +2,7 @@ package edu.utep.cs.cs5390.mypricewatcher;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-// Airam Martinez
+// Airam Martinez & Mildred Brito
 public class PriceFinder {
 
     private Item item;
