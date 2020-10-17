@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 // Airam Martinez
@@ -16,11 +18,15 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
     private TextView itemName;
     private TextView itemInitalPrice;
     private Item item;
+    private WatchListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        adapter = new WatchListAdapter(this, R.layout.watch_list, Item.allItems());
+        ListView listView = findViewById(R.id.listView);
+        listView.setAdapter(adapter);
         /*itemName = findViewById(R.id.itemName);
         itemInitalPrice = findViewById(R.id.itemInitalPrice);
         // Fixed item's name and url

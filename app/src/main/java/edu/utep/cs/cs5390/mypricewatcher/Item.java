@@ -6,10 +6,11 @@ import java.util.List;
 // Airam Martinez
 public class Item {
 
+    private static List<Item> allItems = new ArrayList<>();
+
     private String name;
     private double initalPrice;
     private String url;
-    private static List<Item> allItems = new ArrayList<>();
 
     public Item(String name, String url){
         this.name = name;
@@ -42,7 +43,7 @@ public class Item {
         return this.url;
     }
 
-    public static List<Item> getAllItems() {
+    public static List<Item> allItems() {
         return allItems;
     }
 }
