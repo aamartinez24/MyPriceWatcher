@@ -1,13 +1,18 @@
 package edu.utep.cs.cs5390.mypricewatcher;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,10 +21,21 @@ import java.util.List;
 // Airam Martinez & Mildred Brito
 
 public class WatchListAdapter extends ArrayAdapter<Item> {
+
     PriceFinder priceFinder;
 
     public WatchListAdapter(Context context, int resourceId, List<Item>items){
         super(context, resourceId, items);
+    }
+
+    @Override
+    public int getPosition(Item item) {
+        return super.getPosition(item);
+    }
+
+    @Override
+    public Item getItem(int position) {
+        return super.getItem(position);
     }
 
     @Override
@@ -44,6 +60,47 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
         TextView itemPercentChange = convertView.findViewById(R.id.itemPercentChange);
         itemPercentChange.setText("%" + priceFinder.getPercentageChange());
 
+        Button settingButton = convertView.findViewById(R.id.settings);
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupWindow popupWindow = new PopupWindow(getContext());
+                ArrayList<String> settingList = new ArrayList<>();
+                settingList.add("Remove");
+                settingList.add("Rename");
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_dropdown_item_1line, settingList);
+                ListView listViewSetting = new ListView(getContext());
+                listViewSetting.setAdapter(adapter);
+
+                listViewSetting.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        switch (adapterView.getAdapter().getItem(i).toString()) {
+                            case "Remove":
+                                Log.d("Main", "Remove");
+                                Log.d("Main", "" + getItem(position).getItemName());
+                                remove(getItem(position));
+                                break;
+                            case "Rename":
+                                Log.d("Main", "Rename");
+                                break;
+                        }
+                        popupWindow.dismiss();
+                    }
+                });
+
+                popupWindow.setFocusable(true);
+                popupWindow.setWidth(200);
+                popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                popupWindow.setElevation(10);
+                popupWindow.setContentView(listViewSetting);
+                popupWindow.showAsDropDown(view, 0, 0);
+            }
+        });
+
         return convertView;
     }
+
 }

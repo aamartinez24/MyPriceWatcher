@@ -38,8 +38,7 @@
             android:layout_height="36dp"
             android:layout_gravity="end"
             android:layout_weight="1"
-            android:text="@string/vertical_ellipsis"
-            android:onClick="showPopup" />
+            android:text="@string/vertical_ellipsis" />
 
     </LinearLayout>
 
