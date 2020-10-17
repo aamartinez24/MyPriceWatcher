@@ -36,9 +36,10 @@
             android:id="@+id/settings"
             android:layout_width="30dp"
             android:layout_height="36dp"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:layout_weight="1"
-            android:text="@string/vertical_ellipsis" />
+            android:text="@string/vertical_ellipsis"
+            android:onClick="showPopup" />
 
     </LinearLayout>
 
