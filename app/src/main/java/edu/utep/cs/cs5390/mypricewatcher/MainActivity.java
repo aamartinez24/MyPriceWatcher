@@ -15,19 +15,39 @@ import android.widget.TextView;
 // Airam Martinez
 public class MainActivity extends AppCompatActivity implements AddItemDialog.AddItemDialogListener {
 
+    private TextView itemName;
+    private TextView itemInitalPrice;
     private Item item;
+    private ListView listView;
     private WatchListAdapter adapter;
-    private EditText editTextItemName;
-    private EditText editTextItemURL;
-    private EditText editTextItemPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listView = findViewById(R.id.listView);
         adapter = new WatchListAdapter(this, R.layout.watch_list, Item.allItems());
-        ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
+        /*itemName = findViewById(R.id.itemName);
+        itemInitalPrice = findViewById(R.id.itemInitalPrice);
+        // Fixed item's name and url
+        String name = "Nintendo Switch";
+        String url = "https://www.walmart.com/ip/Nintendo-Switch-Console-with-Neon-Blue-Red-Joy-Con/709776123";
+        item = new Item(name, url);
+        itemName.setText(item.getItemName());
+        // Fixed item's inital price
+        double initalPrice = 299.99;
+        item.setInitalPrice(initalPrice);
+        itemInitalPrice.setText("$" + initalPrice);
+    }
+
+    public void buttonClicked(View view) {
+        Intent intent = new Intent(this, currentPriceActivity.class);
+        intent.putExtra("itemInitalPrice", item.getInitalPrice());
+        intent.putExtra("itemName", item.getItemName());
+        intent.putExtra("itemURL", item.getUrl());
+        startActivity(intent);*/
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         Log.d("Name", "" + itemName);
         Log.d("URL", "" + itemURL);
         Log.d("Price", "" + itemPrice);
-        //added method
+        Item item = new Item(itemName, itemPrice, itemURL);
+        adapter.add(item);
     }
+
 }
