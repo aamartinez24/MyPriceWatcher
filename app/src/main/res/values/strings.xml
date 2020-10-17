@@ -7,4 +7,5 @@
     <string name="textPercentChange">Percentage Change:</string>
     <string name="URL">URL</string>
     <string name="add">Add</string>
+    <string name="vertical_ellipsis">&#8942;</string>
 </resources>

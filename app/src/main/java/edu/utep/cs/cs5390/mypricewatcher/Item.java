@@ -1,11 +1,15 @@
 package edu.utep.cs.cs5390.mypricewatcher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Airam Martinez
 public class Item {
 
     private String name;
     private double initalPrice;
     private String url;
+    private static List<Item> allItems = new ArrayList<>();
 
     public Item(String name, String url){
         this.name = name;
@@ -36,5 +40,9 @@ public class Item {
 
     public String getUrl(){
         return this.url;
+    }
+
+    public static List<Item> getAllItems() {
+        return allItems;
     }
 }

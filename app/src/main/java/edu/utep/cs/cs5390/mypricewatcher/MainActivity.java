@@ -66,5 +66,7 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         Log.d("Name", "" + itemName);
         Log.d("URL", "" + itemURL);
         Log.d("Price", "" + itemPrice);
+        Item item = new Item(itemName, itemPrice, itemURL);
     }
+
 }
