@@ -17,6 +17,8 @@ public class AddItemDialog extends AppCompatDialogFragment {
     private EditText editTextItemURL;
     private EditText editTextItemPrice;
     private AddItemDialogListener listener;
+    private WatchListAdapter adapter;
+    private Item item;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                             double itemPrice = Double.parseDouble(editTextItemPrice.getText().toString());
                             listener.applyTexts(itemName, itemURL, itemPrice);
                         }
+                        addItem();
                     }
                 });
 
@@ -50,6 +53,15 @@ public class AddItemDialog extends AppCompatDialogFragment {
         editTextItemPrice = view.findViewById(R.id.edit_item_price);
 
         return builder.create();
+    }
+
+    private void addItem() {
+        String itemName = editTextItemName.getText().toString();
+        String itemURL = editTextItemURL.getText().toString();
+        double itemPriceD = Double.parseDouble(editTextItemPrice.getText().toString());
+        item = new Item(itemName, itemPriceD, itemURL);
+        adapter.add(item);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

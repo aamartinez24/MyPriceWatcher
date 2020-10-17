@@ -1,7 +1,12 @@
 package edu.utep.cs.cs5390.mypricewatcher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Airam Martinez
 public class Item {
+
+    private static List<Item> allItems = new ArrayList<>();
 
     private String name;
     private double initalPrice;
@@ -36,5 +41,9 @@ public class Item {
 
     public String getUrl(){
         return this.url;
+    }
+
+    public static List<Item> allItems() {
+        return allItems;
     }
 }
