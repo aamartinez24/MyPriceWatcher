@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WatchListAdapter extends ArrayAdapter<Item> {
-    PriceFinder currentPrice;
+    PriceFinder priceFinder;
 
     public WatchListAdapter(Context context, int resourceId, List<Item>items){
         super(context, resourceId, items);
@@ -29,13 +29,20 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
         itemName.setText(current.getItemName());
 
         TextView itemPrice = convertView.findViewById(R.id.itemPrice);
-        itemPrice.setText((int) current.getInitalPrice());
+        String stringDouble = Double.toString(current.getInitalPrice());
+        itemPrice.setText(stringDouble);
+
+        priceFinder = new PriceFinder(current);
 
         TextView itemCurrentPrice = convertView.findViewById(R.id.itemCurrentPrice);
-        itemCurrentPrice.setText((int) currentPrice.getCurrentPrice());
+        stringDouble = Double.toString(priceFinder.getCurrentPrice());
+        itemCurrentPrice.setText(stringDouble);
 
         TextView itemPercentChange = convertView.findViewById(R.id.itemPercentChange);
-        itemCurrentPrice.setText((int) currentPrice.getPercentageChange());
+        stringDouble = Double.toString(priceFinder.getPercentageChange());
+        itemCurrentPrice.setText(stringDouble);
+
+
 
         return convertView;
     }

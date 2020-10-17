@@ -18,14 +18,16 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
     private TextView itemName;
     private TextView itemInitalPrice;
     private Item item;
+    private ListView listView;
     private WatchListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listView = findViewById(R.id.listView);
         adapter = new WatchListAdapter(this, R.layout.watch_list, Item.allItems());
-        ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
         /*itemName = findViewById(R.id.itemName);
         itemInitalPrice = findViewById(R.id.itemInitalPrice);
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         Log.d("URL", "" + itemURL);
         Log.d("Price", "" + itemPrice);
         Item item = new Item(itemName, itemPrice, itemURL);
+        adapter.add(item);
     }
 
 }
