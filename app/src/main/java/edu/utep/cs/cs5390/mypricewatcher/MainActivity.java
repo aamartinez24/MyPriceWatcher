@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         switch (item.getItemId()) {
             case R.id.renameItem:
             case R.id.removeItem:
-                // do your code
+                adapter.clear();
                 return true;
 
             default:
