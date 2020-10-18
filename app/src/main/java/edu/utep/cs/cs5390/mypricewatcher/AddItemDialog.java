@@ -21,8 +21,6 @@ public class AddItemDialog extends AppCompatDialogFragment {
     private EditText editTextItemURL;
     private EditText editTextItemPrice;
     private AddItemDialogListener listener;
-    private WatchListAdapter adapter;
-    private Item item;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
