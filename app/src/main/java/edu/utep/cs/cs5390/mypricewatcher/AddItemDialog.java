@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,9 +22,11 @@ public class AddItemDialog extends AppCompatDialogFragment {
     private EditText editTextItemURL;
     private EditText editTextItemPrice;
     private AddItemDialogListener listener;
+    private String sharedURL;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -41,6 +44,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String itemName = editTextItemName.getText().toString();
+                        Log.d("URL", "" + sharedURL);
                         String itemURL = editTextItemURL.getText().toString();
                         if(!itemName.isEmpty() || !itemURL.isEmpty() || !editTextItemPrice.getText().toString().isEmpty()) {
                             double itemPrice = Double.parseDouble(editTextItemPrice.getText().toString());
@@ -52,6 +56,11 @@ public class AddItemDialog extends AppCompatDialogFragment {
         editTextItemName = view.findViewById(R.id.edit_item_name);
         editTextItemURL = view.findViewById(R.id.edit_item_URL);
         editTextItemPrice = view.findViewById(R.id.edit_item_price);
+
+        if(sharedURL != null) {
+            Log.d("URL", "not null");
+            editTextItemURL.setText(sharedURL);
+        }
 
         return builder.create();
     }
@@ -71,4 +80,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
         void applyTexts(String itemName, String itemURL, double itemPrice);
     }
 
+    public void setEditTextItemURL(String url) {
+        sharedURL = url;
+    }
 }

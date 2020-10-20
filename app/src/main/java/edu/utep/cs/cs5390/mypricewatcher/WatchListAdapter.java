@@ -1,7 +1,9 @@
 package edu.utep.cs.cs5390.mypricewatcher;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -23,9 +26,11 @@ import java.util.List;
 public class WatchListAdapter extends ArrayAdapter<Item> {
 
     PriceFinder priceFinder;
+    Context context;
 
     public WatchListAdapter(Context context, int resourceId, List<Item>items){
         super(context, resourceId, items);
+        this.context = context;
     }
 
     @Override
@@ -67,7 +72,7 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
                 PopupWindow popupWindow = new PopupWindow(getContext());
                 ArrayList<String> settingList = new ArrayList<>();
                 settingList.add("Remove");
-                settingList.add("Rename");
+                settingList.add("Edit");
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_dropdown_item_1line, settingList);
                 ListView listViewSetting = new ListView(getContext());
@@ -82,8 +87,9 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
                                 Log.d("Main", "" + getItem(position).getItemName());
                                 remove(getItem(position));
                                 break;
-                            case "Rename":
-                                Log.d("Main", "Rename");
+                            case "Edit":
+                                Log.d("Main", "Edit");
+
                                 break;
                         }
                         popupWindow.dismiss();
@@ -100,6 +106,17 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
             }
         });
 
+        ImageButton searchButton = convertView.findViewById(R.id.searchURLButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = getItem(position).getUrl();
+                Log.d("URL", "" + url);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                context.startActivity(i);
+            }
+        });
         return convertView;
     }
 

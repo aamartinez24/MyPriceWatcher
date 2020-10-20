@@ -1,6 +1,8 @@
 package edu.utep.cs.cs5390.mypricewatcher;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +22,13 @@ public class currentPriceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_price);
+/*
+        // Set up button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+*/
         // Get all information passed from previous activity
         String itemName = getIntent().getStringExtra("itemName");
         double itemInitalPrice = getIntent().getDoubleExtra("itemInitalPrice", 0);
