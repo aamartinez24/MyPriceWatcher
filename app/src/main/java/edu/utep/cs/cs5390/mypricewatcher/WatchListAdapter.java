@@ -134,7 +134,7 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
         return convertView;
     }
 
-    /*
+    /* Unable to retrieve information from second activity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == request_Value) {

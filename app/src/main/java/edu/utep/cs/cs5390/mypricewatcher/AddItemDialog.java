@@ -6,16 +6,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 // Airam Martinez & Mildred Brito
-
+//This Dailog will popup anytime the user needs to add a new item to the list
 public class AddItemDialog extends AppCompatDialogFragment {
 
     private EditText editTextItemName;
