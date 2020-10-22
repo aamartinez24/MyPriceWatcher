@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -13,13 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
+import androidx.annotation.MainThread;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 // Airam Martinez & Mildred Brito
 
@@ -27,6 +37,8 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
 
     PriceFinder priceFinder;
     Context context;
+
+    int request_Value = 1;
 
     public WatchListAdapter(Context context, int resourceId, List<Item>items){
         super(context, resourceId, items);
@@ -89,6 +101,8 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
                                 break;
                             case "Edit":
                                 Log.d("Main", "Edit");
+                                Intent intent= new Intent("edu.utep.cs.cs5390.ModifyItem");
+                                context.startActivity(intent);
 
                                 break;
                         }
@@ -119,5 +133,16 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
         });
         return convertView;
     }
+
+    /*
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == request_Value) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, data.getData().toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+     */
 
 }

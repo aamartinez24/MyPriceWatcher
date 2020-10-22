@@ -7,13 +7,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Button;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
+
 
 // Airam Martinez & Mildred Brito
 public class MainActivity extends AppCompatActivity implements AddItemDialog.AddItemDialogListener {
 
     private ListView listView;
     private WatchListAdapter adapter;
+
+    private Button cancelButton;
+    private Button saveButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +32,19 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
 
         String action = getIntent().getAction();
         String type = getIntent().getType();
-        if(Intent.ACTION_SEND.equalsIgnoreCase(action)
+/*        if(Intent.ACTION_SEND.equalsIgnoreCase(action)
         && type != null && ("text/plain".equals(type))){
             String url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
             Log.d("URL", "" + url);
             openDialog(url);
-        }
+        }*/
 
         listView = findViewById(R.id.listView);
         adapter = new WatchListAdapter(this, R.layout.watch_list, Item.allItems());
         listView.setAdapter(adapter);
+
+        cancelButton = (Button)findViewById(R.id.buttonCancel);
+        saveButton = (Button)findViewById(R.id.buttonSave);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,12 +65,12 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         AddItemDialog addItemDialog = new AddItemDialog();
         addItemDialog.show(getSupportFragmentManager(), "Add Item Dialog");
     }
-
+/*
     private void openDialog(String url) {
         AddItemDialog addItemDialog = new AddItemDialog();
         addItemDialog.setEditTextItemURL(url);
         addItemDialog.show(getSupportFragmentManager(), "Add Item Dialog");
-    }
+    }*/
 
 
     @Override

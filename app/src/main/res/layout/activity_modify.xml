@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:hint="Item Name"
+        android:id="@+id/modify_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"/>
+
+    <EditText
+        android:hint="Item URL"
+        android:id="@+id/modify_item_URL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modify_item_name"
+        android:layout_alignParentStart="true"/>
+
+    <EditText
+        android:id="@+id/modify_item_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modify_item_URL"
+        android:layout_alignParentStart="true"
+        android:hint="Item Price"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modify_item_price"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modify_item_price"
+        android:layout_toRightOf="@id/buttonCancel"
+        android:text="Save"
+        android:onClick="onSaveClick"/>
+
+
+</RelativeLayout>
