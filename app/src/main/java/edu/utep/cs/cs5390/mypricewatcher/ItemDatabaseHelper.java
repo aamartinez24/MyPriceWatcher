@@ -83,7 +83,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /*Still need to fix this to match items instead of to do id*/
+    /*Still need to fix this to match items*/
     public void delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ITEM_TABLE, COL2 + " = ?", new String[] { Integer.toString(id) } );
