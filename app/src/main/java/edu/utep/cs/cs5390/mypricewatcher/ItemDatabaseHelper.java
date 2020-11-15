@@ -48,5 +48,6 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         Log.d(TAG, "Add data: Adding "+item+ "to " +ITEM_TABLE);
+        
     }
 }
