@@ -67,9 +67,9 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                String name = cursor.getString(0);
+                String name = cursor.getString(2);
                 double price = cursor.getDouble(1);
-                String url = cursor.getString(2);
+                String url = cursor.getString(0);
                 Item task = new Item(name, price, url);
                 itemsList.add(task);
             } while (cursor.moveToNext());
@@ -83,10 +83,9 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /*Still need to fix this to match items*/
-    public void delete(int id) {
+    public void delete(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(ITEM_TABLE, COL2 + " = ?", new String[] { Integer.toString(id) } );
+        db.delete(ITEM_TABLE, COL1 + "=?", new String[] { name } );
         db.close();
     }
 

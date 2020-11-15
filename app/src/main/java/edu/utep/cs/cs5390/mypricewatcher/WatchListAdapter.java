@@ -37,6 +37,7 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
 
     PriceFinder priceFinder;
     Context context;
+    ItemDatabaseHelper itemDatabaseHelper;
 
     int request_Value = 1;
 
@@ -81,6 +82,7 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                itemDatabaseHelper = new ItemDatabaseHelper(getContext());
                 PopupWindow popupWindow = new PopupWindow(getContext());
                 ArrayList<String> settingList = new ArrayList<>();
                 settingList.add("Remove");
@@ -97,6 +99,8 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
                             case "Remove":
                                 Log.d("Main", "Remove");
                                 Log.d("Main", "" + getItem(position).getItemName());
+                                String name = getItem(position).getItemName();
+                                itemDatabaseHelper.delete(name);
                                 remove(getItem(position));
                                 break;
                             case "Edit":
