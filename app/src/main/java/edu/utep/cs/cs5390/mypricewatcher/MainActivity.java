@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         }
 
         listView = findViewById(R.id.listView);
-        adapter = new WatchListAdapter(this, R.layout.watch_list, Item.allItems());
+        adapter = new WatchListAdapter(this, R.layout.watch_list, itemDatabaseHelper.allItems());
         listView.setAdapter(adapter);
 
         cancelButton = findViewById(R.id.buttonCancel);
