@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         Log.d("URL", "" + itemURL);
         Log.d("Price", "" + itemPrice);
         Item item = new Item(itemName, itemPrice, itemURL);
+        itemDatabaseHelper.addData(item);
         adapter.add(item);
     }
 }

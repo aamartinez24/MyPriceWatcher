@@ -8,6 +8,9 @@ public class Item {
 
     private static List<Item> allItems = new ArrayList<>();
 
+    /** True if this item was done. */
+    private boolean done;
+
     private String name;
     private double initalPrice;
     private String url;
@@ -42,6 +45,8 @@ public class Item {
     public String getUrl(){
         return this.url;
     }
+
+    public boolean isDone() { return done; }
 
     public static List<Item> allItems() {
         return allItems;
