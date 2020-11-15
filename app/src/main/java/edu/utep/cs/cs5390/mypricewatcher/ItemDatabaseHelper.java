@@ -9,17 +9,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
     private static final String ITEM_TABLE = "item_table";
     private static final String COL1 = "Name";
     private static final String COL2 = "URL";
+    private static final String COL3 = "Price";
 
 
-    public ItemDatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public ItemDatabaseHelper(Context context) {
         super(context, ITEM_TABLE, null, 1);
     }
 
@@ -27,6 +26,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + ITEM_TABLE + "("
                 + COL2 + " TEXT PRIMARY KEY, "
+                + COL3 + " TEXT, "
                 + COL1 + " TEXT" + ")";
         db.execSQL(createTable);
     }
@@ -37,20 +37,16 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item){
+    public void addData(String item, String url, double price){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1, item);
+        contentValues.put(COL2, url);
+        contentValues.put(COL3, price);
+
+        db.insert(ITEM_TABLE, null, contentValues);
+        db.close();
 
         Log.d(TAG, "Add data: Adding "+item+ "to " +ITEM_TABLE);
-
-        //Notifies if data was inserted correctly
-        long result = db.insert(ITEM_TABLE, null, contentValues);
-        //If data is inserted correctly, it will return -1
-        if(result == -1){
-            return false;
-        } else {
-            return true;
-        }
     }
 }

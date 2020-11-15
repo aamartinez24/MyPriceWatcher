@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 // Airam Martinez & Mildred Brito
@@ -21,11 +22,15 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
     private Button cancelButton;
     private Button saveButton;
 
+    ItemDatabaseHelper itemDatabaseHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        itemDatabaseHelper = new ItemDatabaseHelper(this);
 
         String action = getIntent().getAction();
         String type = getIntent().getType();
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         return super.onOptionsItemSelected(item);
     }
 
+
     private void openDialog() {
         AddItemDialog addItemDialog = new AddItemDialog();
         addItemDialog.show(getSupportFragmentManager(), "Add Item Dialog");
@@ -69,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         addItemDialog.show(getSupportFragmentManager(), "Add Item Dialog");
     }
 
-
     @Override
     public void applyTexts(String itemName, String itemURL, double itemPrice) {
         Log.d("Name", "" + itemName);
@@ -78,5 +83,4 @@ public class MainActivity extends AppCompatActivity implements AddItemDialog.Add
         Item item = new Item(itemName, itemPrice, itemURL);
         adapter.add(item);
     }
-
 }

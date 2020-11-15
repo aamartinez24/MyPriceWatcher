@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+
 // Airam Martinez & Mildred Brito
 //This Dailog will popup anytime the user needs to add a new item to the list
+
 public class AddItemDialog extends AppCompatDialogFragment {
 
     private EditText editTextItemName;
@@ -21,6 +24,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
     private EditText editTextItemPrice;
     private AddItemDialogListener listener;
     private String sharedURL;
+    public ItemDatabaseHelper itemDatabaseHelper;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
                         String itemName = editTextItemName.getText().toString();
                         Log.d("URL", "" + sharedURL);
                         String itemURL = editTextItemURL.getText().toString();
@@ -81,4 +86,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
     public void setEditTextItemURL(String url) {
         sharedURL = url;
     }
+
 }
+
+
