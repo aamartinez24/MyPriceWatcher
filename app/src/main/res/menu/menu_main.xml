@@ -5,8 +5,10 @@
     tools:context="edu.utep.cs.cs5390.mypricewatcher.MainActivity">
 
     <item
-        android:id="@+id/action_add_item"
-        android:icon="@drawable/ic_add_24px"
+        android:id="@+id/addButton"
+        android:icon="@android:drawable/ic_menu_add"
+        android:tint="@android:color/white"
         android:title="@string/add"
         app:showAsAction="always" />
+
 </menu>

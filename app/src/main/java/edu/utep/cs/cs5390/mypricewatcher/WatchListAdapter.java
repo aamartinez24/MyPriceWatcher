@@ -1,48 +1,101 @@
 package edu.utep.cs.cs5390.mypricewatcher;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.PopupWindow;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import androidx.annotation.MainThread;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 // Airam Martinez & Mildred Brito
-
+// Provide views for an AdapterView by returning a view for each Item
+// contained in the watchlist.
 public class WatchListAdapter extends ArrayAdapter<Item> {
 
-    PriceFinder priceFinder;
+    WatchListDatabaseHelper helper;
     Context context;
+    List<Item> items;
 
-    int request_Value = 1;
-
-    public WatchListAdapter(Context context, int resourceId, List<Item>items){
+    public WatchListAdapter(Context context, int resourceId, List<Item> items) {
         super(context, resourceId, items);
         this.context = context;
+        this.items = items;
+    }
+
+    public interface ItemClickListener {
+        void itemClicked(Item item);
+    }
+
+    private ItemClickListener listener;
+
+    public void setItemClickListener(ItemClickListener listener) {this.listener = listener; }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.watched_item, parent, false);
+        }
+
+        Item current = getItem(position);
+        // Sets all views with the item's information.
+        TextView itemNameView = convertView.findViewById(R.id.text_item_name);
+        itemNameView.setText(current.getName());
+        TextView curPriceView = convertView.findViewById(R.id.text_current_price);
+        curPriceView.setText(String.format("Current Price: $%.02f", current.getCurrentPrice()));
+        TextView initPriceView = convertView.findViewById(R.id.text_initial_price);
+        initPriceView.setText(String.format("Initial Price: $%.02f", current.getInitialPrice()));
+        TextView percentageView = convertView.findViewById(R.id.text_percentage_difference);
+        percentageView.setText(String.format("%.02f%% off!", current.calculatePercentageDiff()));
+
+        ImageButton itemMenuButton = convertView.findViewById(R.id.item_menu_button);
+        PopupMenu itemMenu = new PopupMenu(this.getContext(), itemMenuButton);
+        itemMenu.inflate(R.menu.item_menu);
+        // Popup menu when the itemMenuButton is pressed.
+        itemMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                helper = new WatchListDatabaseHelper(getContext());
+                switch(menuItem.getItemId()) {
+                    case R.id.item_visit:
+                        Intent search = new Intent(Intent.ACTION_VIEW);
+                        search.setData(Uri.parse(current.getUrl()));
+                        context.startActivity(search);
+                        return true;
+                    case R.id.item_edit:
+                        Intent edit = new Intent(getContext(), AddItemActivity.class);
+                        edit.putExtra("AddingItem", false);
+                        edit.putExtra("Position", position);
+                        edit.putExtra("ITEM", current);
+                        Activity origin = (Activity) context;
+                        origin.startActivityForResult(edit, 1);
+                        return true;
+                    case R.id.item_remove:
+                        helper.delete(current.getId());
+                        remove(getItem(position));
+                        return true;
+                }
+                return false;
+            }
+        });
+        itemMenuButton.setOnClickListener(view -> itemMenu.show());
+
+        ImageButton itemRefreshButton = convertView.findViewById(R.id.refresh_button);
+        itemRefreshButton.setOnClickListener(view -> {
+            current.findCurrentPrice();
+            notifyDataSetChanged();
+            // TODO add refresh functionality with help of PriceFinder
+            Toast.makeText(getContext(), "Item refreshed!", Toast.LENGTH_SHORT).show();
+        });
+        return convertView;
     }
 
     @Override
@@ -54,95 +107,5 @@ public class WatchListAdapter extends ArrayAdapter<Item> {
     public Item getItem(int position) {
         return super.getItem(position);
     }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.watch_list, parent, false);
-        }
-        Item current = getItem(position);
-        TextView itemName = convertView.findViewById(R.id.ItemName);
-        itemName.setText(current.getItemName());
-
-        TextView itemPrice = convertView.findViewById(R.id.itemPrice);
-        String stringDouble = Double.toString(current.getInitalPrice());
-        itemPrice.setText(stringDouble);
-
-        priceFinder = new PriceFinder(current);
-
-        TextView itemCurrentPrice = convertView.findViewById(R.id.itemCurrentPrice);
-        stringDouble = Double.toString(priceFinder.findCurrPrice());
-        itemCurrentPrice.setText(stringDouble);
-
-        TextView itemPercentChange = convertView.findViewById(R.id.itemPercentChange);
-        itemPercentChange.setText("%" + priceFinder.getPercentageChange());
-
-        Button settingButton = convertView.findViewById(R.id.settings);
-        settingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupWindow popupWindow = new PopupWindow(getContext());
-                ArrayList<String> settingList = new ArrayList<>();
-                settingList.add("Remove");
-                settingList.add("Edit");
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_dropdown_item_1line, settingList);
-                ListView listViewSetting = new ListView(getContext());
-                listViewSetting.setAdapter(adapter);
-
-                listViewSetting.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        switch (adapterView.getAdapter().getItem(i).toString()) {
-                            case "Remove":
-                                Log.d("Main", "Remove");
-                                Log.d("Main", "" + getItem(position).getItemName());
-                                remove(getItem(position));
-                                break;
-                            case "Edit":
-                                Log.d("Main", "Edit");
-                                Intent intent= new Intent("edu.utep.cs.cs5390.ModifyItem");
-                                context.startActivity(intent);
-
-                                break;
-                        }
-                        popupWindow.dismiss();
-                    }
-                });
-
-                popupWindow.setFocusable(true);
-                popupWindow.setWidth(200);
-                popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                popupWindow.setElevation(10);
-                popupWindow.setContentView(listViewSetting);
-                popupWindow.showAsDropDown(view, 0, 0);
-            }
-        });
-
-        ImageButton searchButton = convertView.findViewById(R.id.searchURLButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = getItem(position).getUrl();
-                Log.d("URL", "" + url);
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                context.startActivity(i);
-            }
-        });
-        return convertView;
-    }
-
-    /* Unable to retrieve information from second activity
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == request_Value) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, data.getData().toString(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-     */
 
 }

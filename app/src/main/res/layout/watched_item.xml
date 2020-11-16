@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/itemInList"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/text_current_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Current Price:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_percentage_difference"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_item_name" />
+
+    <TextView
+        android:id="@+id/text_initial_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Initial Price:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_percentage_difference" />
+
+    <TextView
+        android:id="@+id/text_percentage_difference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0.00 off!"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/text_current_price"
+        app:layout_constraintTop_toBottomOf="@+id/text_item_name" />
+
+    <ImageButton
+        android:id="@+id/item_menu_button"
+        android:layout_width="64dp"
+        android:layout_height="40dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_item_name"
+        app:srcCompat="@drawable/ic_action_more_vert" />
+
+    <ImageButton
+        android:id="@+id/refresh_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/text_initial_price"
+        app:layout_constraintEnd_toEndOf="@+id/item_menu_button"
+        app:layout_constraintStart_toStartOf="@+id/item_menu_button"
+        app:layout_constraintTop_toBottomOf="@+id/item_menu_button"
+        app:srcCompat="@drawable/ic_action_refresh" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
