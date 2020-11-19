@@ -18,21 +18,15 @@ public class Item implements Serializable {
         this.url = url;
         // Finds the initial price of the item by getting it from the url.
         // TODO fix PriceFinder
-        //PriceFinder pf = new PriceFinder();
-        //this.initialPrice = pf.findPrice(url);
-        this.initialPrice = 0;
-        /*if(initialPrice < 0) {
-            this.initialPrice = Double.POSITIVE_INFINITY;
-        }*/
+        this.initialPrice = PriceFinder.findPrice(url);
         this.currentPrice = initialPrice;
-        //this.percentageChange = Double.POSITIVE_INFINITY;
         this.percentageChange = calculatePercentageDiff();
     }
 
     public Item(String name, double initialPrice, String url) {
         this.name = name;
         this.initialPrice = initialPrice;
-        this.currentPrice = initialPrice;
+        this.currentPrice = PriceFinder.findPrice(url);
         this.url = url;
         this.percentageChange = calculatePercentageDiff();
     }
@@ -57,15 +51,17 @@ public class Item implements Serializable {
     // Method to calculate the percentage difference between the initial
     // and the current price of the item.
     public double calculatePercentageDiff() {
-        return (100 - (this.currentPrice/this.initialPrice) * 100);
+        double difference = currentPrice - initialPrice;
+        difference = difference/initialPrice;
+        difference = difference*100;
+        difference = Math.round(difference * 100.0) / 100.0;
+        return difference;
     }
 
     // Method to get the current price of the item by using the PriceFinder class.
     // TODO fix PriceFinder
     public void findCurrentPrice() {
-        PriceFinder priceFinder = new PriceFinder();
-        //double priceFound = priceFinder.findPrice(url);
-        double priceFound = 0;
+        double priceFound = PriceFinder.findPrice(url);
         if(priceFound >= 0) {
             this.currentPrice = priceFound;
             setPercentageChange();

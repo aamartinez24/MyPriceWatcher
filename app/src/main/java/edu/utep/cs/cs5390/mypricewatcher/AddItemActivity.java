@@ -70,12 +70,10 @@ public class AddItemActivity extends AppCompatActivity {
                     // Input is valid and user is adding a new item.
                     if(isAddingItem) {
                         String newItemName = itemName.getText().toString();
-                        // Static value until we fix PriceWatcher class.
-                        // TODO fix PriceFinder
-                        double newItemInit = 10.20;
-                        double newItemCurr = 20.30;
-
                         String newItemUrl = itemUrl.getText().toString();
+                        // TODO fix PriceFinder
+                        double newItemInit = PriceFinder.findPrice(newItemUrl);
+                        double newItemCurr = newItemInit;
                         Intent returnIntent = new Intent();
                         // Pass all data to create a new item.
                         returnIntent.putExtra("Name", newItemName);
@@ -87,11 +85,15 @@ public class AddItemActivity extends AppCompatActivity {
                     // Input is valid and user is editing an existing item.
                     else {
                         editItem.setName(itemName.getText().toString());
-                        editItem.setUrl(itemUrl.getText().toString());
                         // TODO fix PriceFinder
-                        /*editItem.findCurrentPrice();
-                        editItem.setInitialPrice(editItem.getCurrentPrice());
-                        editItem.setPercentageChange();*/
+                        if(editItem.getUrl().equals(itemUrl.getText().toString())) {
+                            editItem.findCurrentPrice();
+                        }
+                        else {
+                            editItem.setUrl(itemUrl.getText().toString());
+                            editItem.setInitialPrice(PriceFinder.findPrice(editItem.getUrl()));
+                        }
+                        editItem.setPercentageChange();
                         Intent returnIntent = new Intent();
                         // Pass the item and its position in the ListView.
                         returnIntent.putExtra("ITEM", editItem);
@@ -112,8 +114,8 @@ public class AddItemActivity extends AppCompatActivity {
         else if(!URLUtil.isValidUrl(newItemUrl))
             return 1;       // URL is invalid.
         // TODO fix PriceFinder
-        /*else if(PriceFinder.validateUrl(newItemUrl) == 0)
-            return 2;*/     // URL is not supported by app.
+        else if(!PriceFinder.validateUrl(newItemUrl))
+            return 2;       // URL is not supported by app.
         else
             return 3;       // All input is valid.
     }
